@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/dir2.mp3-d888e2d91c0a7f0242c66d6a4a124103.mp3str"
+
+[deps]
+
+source_file="res://assets/floob/dir2.mp3"
+dest_files=[ "res://.import/dir2.mp3-d888e2d91c0a7f0242c66d6a4a124103.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

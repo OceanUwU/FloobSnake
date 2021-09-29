@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Food.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Food" type="Area2D" groups=[
+"foods",
+]]
+z_index = 3
+script = ExtResource( 1 )
+
+[node name="Opacity" type="Tween" parent="."]
+
+[node name="S" type="Node2D" parent="."]
+position = Vector2( 25, 25 )
+scale = Vector2( 0.25, 0.25 )
+
+[node name="prite" type="Sprite" parent="S"]
+
+[node name="Scale" type="Tween" parent="S/prite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 25, 25 )
+scale = Vector2( 2.5, 2.5 )
+shape = SubResource( 1 )
+
+[node name="Position" type="Tween" parent="."]

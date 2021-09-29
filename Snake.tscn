@@ -1,0 +1,125 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://Snake.gd" type="Script" id=1]
+[ext_resource path="res://assets/floob/legs.png" type="Texture" id=2]
+[ext_resource path="res://assets/floob/eyes.png" type="Texture" id=3]
+[ext_resource path="res://assets/floob/crash1.png" type="Texture" id=4]
+[ext_resource path="res://assets/floob/crash2.png" type="Texture" id=5]
+[ext_resource path="res://assets/floob/dazed0.png" type="Texture" id=6]
+[ext_resource path="res://assets/floob/dazed1.png" type="Texture" id=7]
+[ext_resource path="res://assets/floob/dazed2.png" type="Texture" id=8]
+[ext_resource path="res://assets/floob/crash0.png" type="Texture" id=9]
+[ext_resource path="res://assets/floob/dazed3.png" type="Texture" id=10]
+[ext_resource path="res://assets/floob/dazed4.png" type="Texture" id=11]
+[ext_resource path="res://assets/floob/dazed5.png" type="Texture" id=12]
+[ext_resource path="res://assets/floob/dazed6.png" type="Texture" id=13]
+[ext_resource path="res://assets/floob/dazed7.png" type="Texture" id=14]
+[ext_resource path="res://assets/deathparticle.png" type="Texture" id=15]
+[ext_resource path="res://assets/floob/eat.mp3" type="AudioStream" id=16]
+[ext_resource path="res://assets/floob/die.mp3" type="AudioStream" id=17]
+[ext_resource path="res://assets/floob/win.mp3" type="AudioStream" id=18]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "alive",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "dazed",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "crashing",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.232955 ), 0.0, 6.19899, 0, 0, Vector2( 1, 0 ), 0.789611, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+gravity = Vector3( -15, 0, 0 )
+initial_velocity = 50.0
+angular_velocity = 360.0
+angular_velocity_random = 0.66
+orbit_velocity = 0.01
+orbit_velocity_random = 0.23
+scale = 0.4
+scale_random = 1.0
+scale_curve = SubResource( 4 )
+hue_variation = 1.0
+hue_variation_random = 1.0
+
+[sub_resource type="RectangleShape2D" id=6]
+
+[node name="Snake" type="Node2D"]
+z_index = 2
+z_as_relative = false
+script = ExtResource( 1 )
+
+[node name="Eyes" type="AnimatedSprite" parent="."]
+z_index = 2
+z_as_relative = false
+frames = SubResource( 1 )
+animation = "alive"
+playing = true
+
+[node name="Legs" type="AnimatedSprite" parent="."]
+z_index = 1
+z_as_relative = false
+frames = SubResource( 2 )
+
+[node name="DeathParticles" type="Particles2D" parent="."]
+position = Vector2( 47.202, 0 )
+rotation = -3.14159
+emitting = false
+amount = 9
+lifetime = 2.0
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.69
+process_material = SubResource( 5 )
+texture = ExtResource( 15 )
+
+[node name="Die" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 25, 25 )
+scale = Vector2( 2, 2 )
+stream = ExtResource( 17 )
+volume_db = -5.0
+
+[node name="Eat" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 25, 25 )
+scale = Vector2( 2, 2 )
+stream = ExtResource( 16 )
+volume_db = -4.0
+
+[node name="Turn" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+
+[node name="Win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+volume_db = -4.039
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 25, 25 )
+scale = Vector2( 2, 2 )
+shape = SubResource( 6 )
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

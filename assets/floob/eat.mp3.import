@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/eat.mp3-30050ed987a04a48dd0628979596e403.mp3str"
+
+[deps]
+
+source_file="res://assets/floob/eat.mp3"
+dest_files=[ "res://.import/eat.mp3-30050ed987a04a48dd0628979596e403.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

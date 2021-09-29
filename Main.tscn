@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/grid.png" type="Texture" id=1]
+[ext_resource path="res://Snake.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://Food.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ScoreHUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://DeathMenu.tscn" type="PackedScene" id=6]
+
+[node name="Main" type="Node"]
+script = ExtResource( 3 )
+Food = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.827451, 0.827451, 0.827451, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Grid" type="Sprite" parent="."]
+position = Vector2( 18.6652, 20 )
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 500, 500 )
+
+[node name="Snake" parent="." instance=ExtResource( 2 )]
+position = Vector2( 20, 20 )
+
+[node name="ScoreHUD" parent="." instance=ExtResource( 5 )]
+offset = Vector2( 0, 530 )
+transform = Transform2D( 1, 0, 0, 1, 0, 530 )
+
+[node name="DeathMenu" parent="." instance=ExtResource( 6 )]
+
+[connection signal="die" from="Snake" to="." method="_on_Snake_die"]
+[connection signal="eat" from="Snake" to="." method="_on_Snake_eat"]
+[connection signal="win" from="Snake" to="." method="_on_Snake_win"]
+[connection signal="reset_best" from="DeathMenu" to="." method="_on_DeathMenu_reset_best"]
+[connection signal="restart" from="DeathMenu" to="." method="_on_DeathMenu_restart"]
